@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { ArrowRight, ShieldCheck, Award, Globe, Leaf } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useModal } from '@/components/providers/ModalContext';
@@ -14,10 +13,10 @@ const stats = [
 // Featured ingredient preview strip
 const ingredients = [
   { name: 'Turmeric', img: 'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=120&h=120&fit=crop&q=80' },
-  { name: 'Ashwagandha', img: 'https://images.unsplash.com/photo-1611241893603-3c228ee0ce9f?w=120&h=120&fit=crop&q=80' },
-  { name: 'Neem', img: 'https://images.unsplash.com/photo-1567922045116-2a00fae2ed03?w=120&h=120&fit=crop&q=80' },
-  { name: 'Moringa', img: 'https://images.unsplash.com/photo-1622467827417-bbe2237067a9?w=120&h=120&fit=crop&q=80' },
-  { name: 'Aloe Vera', img: 'https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=120&h=120&fit=crop&q=80' },
+  { name: 'Ashwagandha', img: 'https://images.pexels.com/photos/10902685/pexels-photo-10902685.jpeg?auto=compress&cs=tinysrgb&w=120&h=120&fit=crop' },
+  { name: 'Neem', img: 'https://images.pexels.com/photos/16061011/pexels-photo-16061011.jpeg?auto=compress&cs=tinysrgb&w=120&h=120&fit=crop' },
+  { name: 'Moringa', img: 'https://images.pexels.com/photos/33500190/pexels-photo-33500190.jpeg?auto=compress&cs=tinysrgb&w=120&h=120&fit=crop' },
+  { name: 'Aloe Vera', img: 'https://images.pexels.com/photos/7408838/pexels-photo-7408838.jpeg?auto=compress&cs=tinysrgb&w=120&h=120&fit=crop' },
   { name: 'Green Tea', img: 'https://images.unsplash.com/photo-1627435601361-ec25f5b1d0e5?w=120&h=120&fit=crop&q=80' },
 ];
 
@@ -29,13 +28,12 @@ export function HeroSection() {
 
       {/* ── Full-bleed background image ───────────────────────────────── */}
       <div className="absolute inset-0 z-0">
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=1920&h=1080&fit=crop&q=85"
-          alt="Ayurvedic herbs and botanicals"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
+          alt=""
+          aria-hidden="true"
+          className="h-full w-full object-cover object-center"
         />
         {/* Warm gradient overlay — left-heavy so text is readable */}
         <div className="absolute inset-0 bg-gradient-to-r from-surface/95 via-surface/80 to-surface/30" />
