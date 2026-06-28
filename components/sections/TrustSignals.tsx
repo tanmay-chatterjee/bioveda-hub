@@ -1,9 +1,5 @@
 'use client';
 
-import { m } from 'framer-motion';
-import { useRef } from 'react';
-import { useInView } from 'framer-motion';
-import { fadeInUp, staggerContainer } from '@/hooks/useInViewAnimation';
 import { ShieldCheck } from 'lucide-react';
 import type { Certification } from '@/types';
 
@@ -25,26 +21,18 @@ const fallbackCerts = [
 ];
 
 export function TrustSignals({ certifications }: TrustSignalsProps) {
-  const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref as React.RefObject<Element>, { once: true, amount: 0.2 });
-
   const certs = certifications.length > 0
     ? certifications.map((c) => ({ id: c._id, name: c.name, body: c.issuingBody || '' }))
     : fallbackCerts;
 
   return (
-    <section ref={ref} className="py-20 px-6 overflow-hidden bg-surface">
+    <section className="py-20 px-6 overflow-hidden bg-surface">
       <div className="mx-auto max-w-7xl">
 
         {/* Label */}
-        <m.p
-          variants={fadeInUp}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="text-center text-xs text-text-dim uppercase tracking-widest mb-8"
-        >
+        <p className="text-center text-xs text-text-dim uppercase tracking-widest mb-8">
           Trusted by India&apos;s leading pharmaceutical &amp; wellness brands
-        </m.p>
+        </p>
 
         {/* Partner marquee */}
         <div className="relative overflow-hidden">
@@ -63,16 +51,10 @@ export function TrustSignals({ certifications }: TrustSignalsProps) {
         </div>
 
         {/* Certification badges */}
-        <m.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="mt-16 flex flex-wrap items-stretch justify-center gap-4"
-        >
+        <div className="mt-16 flex flex-wrap items-stretch justify-center gap-4">
           {certs.map((cert) => (
-            <m.div
+            <div
               key={cert.id}
-              variants={fadeInUp}
               className="warm-card flex items-center gap-3 px-5 py-3.5 min-w-[180px]"
             >
               <div className="rounded-lg bg-accent-500/10 p-2 flex-shrink-0">
@@ -84,9 +66,9 @@ export function TrustSignals({ certifications }: TrustSignalsProps) {
                   <p className="text-xs text-text-dim mt-0.5">{cert.body}</p>
                 )}
               </div>
-            </m.div>
+            </div>
           ))}
-        </m.div>
+        </div>
       </div>
     </section>
   );

@@ -1,10 +1,6 @@
 'use client';
 
-import { m } from 'framer-motion';
-import { useRef } from 'react';
-import { useInView } from 'framer-motion';
 import { FlaskConical, ShieldCheck, Truck, FileText, Leaf, Globe } from 'lucide-react';
-import { staggerContainer, fadeInUp } from '@/hooks/useInViewAnimation';
 
 const features = [
   {
@@ -58,43 +54,27 @@ const features = [
 ];
 
 export function WhyBioVeda() {
-  const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref as React.RefObject<Element>, { once: true, amount: 0.1 });
-
   return (
-    <section ref={ref} className="py-24 px-6 botanical-bg-green">
+    <section className="py-24 px-6 botanical-bg-green">
       <div className="mx-auto max-w-7xl">
 
         {/* Header */}
-        <m.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="mb-16 text-center"
-        >
-          <m.div variants={fadeInUp} className="mb-4 flex justify-center">
-            <span className="herb-badge herb-badge-green">Why Choose BioVeda Hub</span>
-          </m.div>
-          <m.h2 variants={fadeInUp} className="mb-4 font-display text-4xl font-bold text-text md:text-5xl">
+        <div className="mb-16 text-center">
+          <span className="herb-badge herb-badge-green mb-4 inline-flex">Why Choose BioVeda Hub</span>
+          <h2 className="mt-2 mb-4 font-display text-4xl font-bold text-text md:text-5xl">
             The BioVeda <span className="text-gradient-herb">Advantage</span>
-          </m.h2>
-          <m.p variants={fadeInUp} className="mx-auto max-w-2xl text-text-muted">
+          </h2>
+          <p className="mx-auto max-w-2xl text-text-muted">
             Bridging traditional Ayurvedic wisdom with modern pharmaceutical standards —
             so your formulations carry the purest botanical heritage.
-          </m.p>
-        </m.div>
+          </p>
+        </div>
 
         {/* Feature grid */}
-        <m.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-        >
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feat) => (
-            <m.div
+            <div
               key={feat.title}
-              variants={fadeInUp}
               className={`warm-card p-6 transition-all duration-300 cursor-default ${feat.border}`}
             >
               <div className={`mb-4 inline-flex rounded-xl p-3 ${feat.iconBg}`}>
@@ -102,9 +82,9 @@ export function WhyBioVeda() {
               </div>
               <h3 className="mb-2 text-base font-semibold text-text">{feat.title}</h3>
               <p className="text-sm text-text-muted leading-relaxed">{feat.description}</p>
-            </m.div>
+            </div>
           ))}
-        </m.div>
+        </div>
       </div>
     </section>
   );
