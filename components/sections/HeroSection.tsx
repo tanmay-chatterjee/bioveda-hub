@@ -14,10 +14,10 @@ const stats = [
 // Featured ingredient preview strip
 const ingredients = [
   { name: 'Turmeric', img: 'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=120&h=120&fit=crop&q=80' },
-  { name: 'Ashwagandha', img: 'https://images.unsplash.com/photo-1540278426297-e9e5ecf4cc3a?w=120&h=120&fit=crop&q=80' },
-  { name: 'Neem', img: 'https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=120&h=120&fit=crop&q=80' },
-  { name: 'Moringa', img: 'https://images.unsplash.com/photo-1563811771559-51b843acfdb4?w=120&h=120&fit=crop&q=80' },
-  { name: 'Aloe Vera', img: 'https://images.unsplash.com/photo-1596460107916-430662021049?w=120&h=120&fit=crop&q=80' },
+  { name: 'Ashwagandha', img: 'https://images.unsplash.com/photo-1611241893603-3c228ee0ce9f?w=120&h=120&fit=crop&q=80' },
+  { name: 'Neem', img: 'https://images.unsplash.com/photo-1567922045116-2a00fae2ed03?w=120&h=120&fit=crop&q=80' },
+  { name: 'Moringa', img: 'https://images.unsplash.com/photo-1622467827417-bbe2237067a9?w=120&h=120&fit=crop&q=80' },
+  { name: 'Aloe Vera', img: 'https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=120&h=120&fit=crop&q=80' },
   { name: 'Green Tea', img: 'https://images.unsplash.com/photo-1627435601361-ec25f5b1d0e5?w=120&h=120&fit=crop&q=80' },
 ];
 
@@ -40,6 +40,41 @@ export function HeroSection() {
         {/* Warm gradient overlay — left-heavy so text is readable */}
         <div className="absolute inset-0 bg-gradient-to-r from-surface/95 via-surface/80 to-surface/30" />
         <div className="absolute inset-0 bg-gradient-to-b from-surface/30 via-transparent to-surface/60" />
+      </div>
+
+      {/* ── Decorative mandala/lotus watermark behind text ─────────────── */}
+      <div className="pointer-events-none absolute inset-0 z-[1] flex items-center justify-center opacity-[0.06]" aria-hidden="true">
+        <svg viewBox="0 0 500 500" className="h-[600px] w-[600px] md:h-[750px] md:w-[750px] translate-x-[10%] -translate-y-[5%]" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Mandala rings */}
+          <circle cx="250" cy="250" r="240" stroke="#92400e" strokeWidth="0.8" />
+          <circle cx="250" cy="250" r="200" stroke="#92400e" strokeWidth="0.5" />
+          <circle cx="250" cy="250" r="160" stroke="#92400e" strokeWidth="0.4" />
+          {/* Petal pattern */}
+          {Array.from({ length: 12 }).map((_, i) => (
+            <ellipse
+              key={i}
+              cx="250" cy="120"
+              rx="18" ry="70"
+              fill="#92400e"
+              transform={`rotate(${i * 30} 250 250)`}
+              opacity="0.6"
+            />
+          ))}
+          {/* Inner petals */}
+          {Array.from({ length: 8 }).map((_, i) => (
+            <ellipse
+              key={`inner-${i}`}
+              cx="250" cy="170"
+              rx="12" ry="45"
+              fill="#d97706"
+              transform={`rotate(${i * 45} 250 250)`}
+              opacity="0.4"
+            />
+          ))}
+          {/* Center */}
+          <circle cx="250" cy="250" r="25" fill="#d97706" opacity="0.5" />
+          <circle cx="250" cy="250" r="12" fill="#92400e" opacity="0.6" />
+        </svg>
       </div>
 
       {/* ── Main content ──────────────────────────────────────────────── */}
