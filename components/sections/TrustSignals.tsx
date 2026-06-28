@@ -4,6 +4,7 @@ import { m } from 'framer-motion';
 import { useRef } from 'react';
 import { useInView } from 'framer-motion';
 import { fadeInUp, staggerContainer } from '@/hooks/useInViewAnimation';
+import { ShieldCheck } from 'lucide-react';
 import type { Certification } from '@/types';
 
 interface TrustSignalsProps {
@@ -15,83 +16,77 @@ const partnerNames = [
   'Emami', 'Marico', 'Cipla', 'Ayurvedagram', 'Biotique',
 ];
 
+const fallbackCerts = [
+  { id: 'gmp',    name: 'WHO-GMP Certified',   body: 'World Health Organization' },
+  { id: 'iso',    name: 'ISO 9001:2015',        body: 'International Standard' },
+  { id: 'fssai',  name: 'FSSAI Approved',       body: 'Food Safety Authority of India' },
+  { id: 'ayush',  name: 'AYUSH Compliant',      body: 'Ministry of AYUSH, India' },
+  { id: 'coa',    name: 'COA Guaranteed',       body: 'Every Batch' },
+];
+
 export function TrustSignals({ certifications }: TrustSignalsProps) {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref as React.RefObject<Element>, { once: true, amount: 0.2 });
 
+  const certs = certifications.length > 0
+    ? certifications.map((c) => ({ id: c._id, name: c.name, body: c.issuingBody || '' }))
+    : fallbackCerts;
+
   return (
-    <section ref={ref} className="py-20 px-6 overflow-hidden">
+    <section ref={ref} className="py-20 px-6 overflow-hidden bg-surface">
       <div className="mx-auto max-w-7xl">
-        {/* Heading */}
+
+        {/* Label */}
         <m.p
           variants={fadeInUp}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
-          className="text-center text-sm text-text-dim uppercase tracking-widest mb-8"
+          className="text-center text-xs text-text-dim uppercase tracking-widest mb-8"
         >
           Trusted by India&apos;s leading pharmaceutical &amp; wellness brands
         </m.p>
 
-        {/* Marquee */}
+        {/* Partner marquee */}
         <div className="relative overflow-hidden">
           <div className="flex gap-16 animate-marquee whitespace-nowrap">
             {[...partnerNames, ...partnerNames].map((name, i) => (
               <span
                 key={`${name}-${i}`}
-                className="inline-block text-xl font-display font-semibold text-text-dim opacity-40 hover:opacity-80 transition-opacity select-none"
+                className="inline-block font-display text-xl font-semibold text-text-dim opacity-50 hover:opacity-90 transition-opacity select-none"
               >
                 {name}
               </span>
             ))}
           </div>
-          {/* Fade edges */}
           <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-surface to-transparent" />
           <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-surface to-transparent" />
         </div>
 
-        {/* Certifications */}
-        {certifications.length > 0 && (
-          <m.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
-            className="mt-16 flex flex-wrap items-center justify-center gap-6"
-          >
-            {certifications.map((cert) => (
-              <m.div
-                key={cert._id}
-                variants={fadeInUp}
-                className="flex flex-col items-center gap-2 rounded-xl border border-surface-300 bg-surface-100 px-6 py-4"
-              >
-                <span className="text-sm font-semibold text-text">{cert.name}</span>
-                {cert.issuingBody && (
-                  <span className="text-xs text-text-dim">{cert.issuingBody}</span>
+        {/* Certification badges */}
+        <m.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          className="mt-16 flex flex-wrap items-stretch justify-center gap-4"
+        >
+          {certs.map((cert) => (
+            <m.div
+              key={cert.id}
+              variants={fadeInUp}
+              className="warm-card flex items-center gap-3 px-5 py-3.5 min-w-[180px]"
+            >
+              <div className="rounded-lg bg-accent-500/10 p-2 flex-shrink-0">
+                <ShieldCheck className="h-4 w-4 text-accent-600" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-text leading-tight">{cert.name}</p>
+                {cert.body && (
+                  <p className="text-xs text-text-dim mt-0.5">{cert.body}</p>
                 )}
-              </m.div>
-            ))}
-          </m.div>
-        )}
-
-        {/* Fallback certification badges if no CMS data */}
-        {certifications.length === 0 && (
-          <m.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
-            className="mt-16 flex flex-wrap items-center justify-center gap-4"
-          >
-            {['GMP Certified', 'ISO 9001:2015', 'FSSAI Approved', 'AYUSH Compliant', 'COA Guaranteed'].map((c) => (
-              <m.div
-                key={c}
-                variants={fadeInUp}
-                className="flex items-center gap-2 rounded-full border border-primary-500/20 bg-primary-500/5 px-5 py-2"
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-primary-500" />
-                <span className="text-sm font-medium text-primary-300">{c}</span>
-              </m.div>
-            ))}
-          </m.div>
-        )}
+              </div>
+            </m.div>
+          ))}
+        </m.div>
       </div>
     </section>
   );
