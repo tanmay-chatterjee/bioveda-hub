@@ -9,7 +9,9 @@ export async function POST(req: NextRequest) {
   }
 
   const tag = req.nextUrl.searchParams.get('tag') || 'products';
-  revalidateTag(tag);
+  // Cast avoids type-signature mismatch between Next.js versions (14: 1 arg, 15+: 2 args)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (revalidateTag as any)(tag);
 
   return NextResponse.json({ revalidated: true, tag, timestamp: new Date().toISOString() });
 }
