@@ -1,6 +1,9 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy-initialize so missing env vars don't crash the build
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY ?? 'placeholder');
+}
 const notificationEmail = process.env.NOTIFICATION_EMAIL || 'sales@biovedahub.com';
 
 export async function sendEnquiryNotification(data: {
@@ -14,7 +17,7 @@ export async function sendEnquiryNotification(data: {
   enquiryId: string;
 }): Promise<void> {
   const products = data.productNames?.join(', ') || 'Not specified';
-  await resend.emails.send({
+  await getResend().emails.send({
     from: 'BioVeda Hub <noreply@biovedahub.com>',
     to: notificationEmail,
     subject: `New Enquiry from ${data.companyName} — BioVeda Hub`,
@@ -41,7 +44,7 @@ export async function sendEnquiryConfirmation(data: {
   email: string;
   companyName: string;
 }): Promise<void> {
-  await resend.emails.send({
+  await getResend().emails.send({
     from: 'BioVeda Hub <noreply@biovedahub.com>',
     to: data.email,
     subject: 'Your Enquiry Received — BioVeda Hub',

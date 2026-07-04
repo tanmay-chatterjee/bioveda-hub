@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   }
 
   const tag = req.nextUrl.searchParams.get('tag') || 'products';
-  revalidateTag(tag, 'everything');
+  revalidateTag(tag);
 
   return NextResponse.json({ revalidated: true, tag, timestamp: new Date().toISOString() });
 }
