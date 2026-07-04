@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, FlaskConical, Leaf } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useModal } from '@/components/providers/ModalContext';
+import { urlFor } from '@/lib/sanity';
 import type { Product } from '@/types';
 
 interface IngredientsShowcaseProps {
@@ -185,7 +186,7 @@ export function IngredientsShowcase({ products }: IngredientsShowcaseProps) {
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((product) => {
               const imageUrl = product.heroImage
-                ? `https://cdn.sanity.io/images/${product.heroImage._sanityAsset || ''}`
+                ? urlFor(product.heroImage).width(600).height(400).url()
                 : null;
               return (
                 <div key={product._id} className="warm-card overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
